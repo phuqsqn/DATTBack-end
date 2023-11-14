@@ -1,19 +1,36 @@
 const commentModel = require('../model/comment.model');
-// const commentValid = require('../validations/comment.valid')
+const productModel = require('../model/product.model');
+const accountModel = require('../model/account.model');
+const ErrorResponse = require("../helpers/ErrorReponse");
+// sao lại comment lại ??? dùng nó bên dưới mà comment bên trên thì nó sẽ k dùng được á
+const commentValid = require('../validations/comment.valid')
 module.exports = {
   creatComment: async (req, res, next) => {
     const product_id = req.params.product_id;
+    const account_id = req.body.account
     const body = req.body
-    // const {error , value} = commentValid(body)
-    // if (error){
-    //     return res.status(400).json({
-    //       statusCode: 400,
-    //     message: error.message,
-    //     });
-    // }
+    const { error, value } = commentValid(body)
+    if (error) {
+      throw new ErrorResponse(400, error.message);
+      //\"product\" is required có nghĩa là cần truyền product, tức là commentValid của em đang yêu cầu truyền product =)))
+    }
+    //check account
+    const account_comment = await accountModel.findById(account_id)
+    if (!account_comment) {
+      throw new ErrorResponse(404, 'id tài khoản không tồn tại');
+    }
+
+    //check product
+    const product_comment = await productModel.findById(product_id);
+    if (!product_comment){
+      throw new ErrorResponse(404, "product_id not found");
+    }
+
     body.product = product_id;
+    //khoong thay log ra ne
+  
     const newComment = await commentModel.create(body);
-    return res.status(201).json(newComment); 
+    return res.status(201).json(newComment);
   },
   getComment: async (req, res, next) => {
     const product_id = req.params.product_id;
@@ -22,16 +39,20 @@ module.exports = {
     });
     return res.status(200).json(products);
   },
+  getAllComment: async (req, res) => {
+    const product = await commentModel.find();
+    return res.status(200).json(product);
+  },
   updateComment: async (req, res, next) => {
     const id = req.params.id;
-    const body = req.body; 
-    const updateCm = await commentModel.findByIdAndUpdate(id, body, {  
+    const body = req.body;
+    const updateCm = await commentModel.findByIdAndUpdate(id, body, {
       new: true,
     });
     return res.status(200).json(updateCm);
   },
   deleteComment: async (req, res, next) => {
-    const id = req.params.id; 
+    const id = req.params.id;
     const deleteCm = await commentModel.findByIdAndDelete(id);
     return res.status(200).json(deleteCm);
   },

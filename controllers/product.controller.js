@@ -1,28 +1,35 @@
 const productModel = require('../model/product.model');
 const productValid = require('../validations/product.valid')
 module.exports = {
+  getProductHot: async (req, res) => {
+    const product_hot = await productModel.find({
+      product_hot: 1
+    })
+    return res.status(200).json(product_hot);
+  },
   creatProduct: async (req, res, next) => {
     const category_id = req.params.category_id;
     const body = req.body
-    const {error , value} = productValid(body)
-    if (error){
-        return res.status(400).json({
-          statusCode: 400,
-        message: error.message, 
-        });
+    console.log(body)
+    const { error, value } = productValid(body)
+    if (error) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: error.message,
+      });
     }
     body.category = category_id;
-    const newProduct = await productModel.create(body);  
+    const newProduct = await productModel.create(body);
     return res.status(201).json(newProduct);
-  }, 
-  getProduct: async (req, res, next) => { 
+  },
+  getProduct: async (req, res, next) => {
     const category_id = req.params.category_id;
     const category = await productModel.find({
       category: category_id,
     });
     return res.status(200).json(category);
   },
-  getAllProduct: async(req, res) => {
+  getAllProduct: async (req, res) => {
     const categories = await productModel.find();
     return res.status(200).json(categories);
   },
@@ -37,6 +44,6 @@ module.exports = {
   deleteProduct: async (req, res, next) => {
     const id = req.params.id;
     const deletePro = await productModel.findByIdAndDelete(id);
-    return res.status(200).json(deletePro); 
+    return res.status(200).json(deletePro);
   },
 }; 

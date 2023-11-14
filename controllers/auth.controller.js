@@ -40,7 +40,7 @@ module.exports = {
       //   statusCode: 400,
       //   message: 'Sai Tài Khoản & Mật Khẩu ',
       // });
-      // throw new ErrorReponse(404, 'Sai Tài Khoản hoặc Mật Khẩu');
+      throw new ErrorReponse(404, 'Sai Tài Khoản hoặc Mật Khẩu');
     }
     const payload = {
       _id: account._id,

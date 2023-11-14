@@ -4,19 +4,24 @@ const productSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     img: {
       type: String,
-      require: true,
+      required: true,
     },
     price: {
       type: String,
-      require: true,
+      required: true,
     },
     description: {
       type: String,
-      require: true,
+      required: true,
+    },
+    product_hot: {
+      type: Number,
+      required: true,
+      default: 0
     },
     category: {
       type: mongoose.SchemaTypes.ObjectId,
