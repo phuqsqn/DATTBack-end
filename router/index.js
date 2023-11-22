@@ -6,6 +6,7 @@ const jobRouter = require('./job.router');
 const authRouter = require('./auth.router');
 const errorHandle = require('../middlewares/error.handle');
 const cartRouter = require("./cart.router");
+const oders = require("./oder.router")
 
 module.exports = (app) => {
   app.use('/api/accounts', accountRouter);
@@ -15,5 +16,6 @@ module.exports = (app) => {
   app.use('/api/jobs', jobRouter);
   app.use('/api/auth', authRouter);
   app.use('/api/carts', cartRouter);
+  app.use('/api/oders', oders)
   app.use(errorHandle);
 };
