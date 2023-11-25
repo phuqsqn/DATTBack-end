@@ -41,6 +41,7 @@ module.exports = {
   },
   getAllComment: async (req, res) => {
     const product = await commentModel.find();
+    
     return res.status(200).json(product);
   },
   updateComment: async (req, res, next) => {

@@ -1,6 +1,17 @@
 const productModel = require('../model/product.model');
 const productValid = require('../validations/product.valid')
 module.exports = {
+  // getProductId: async (req, res) => {
+  //   const id = req.params.id;
+  //   const body = req.body;
+  //   const ProDuct = await productModel.find(id);
+  //   return res.status(200).json(ProDuct);
+  // },
+  getProductId: async (req, res) => {
+    const id = req.params.id;
+    const product = await productModel.findById(id)
+    return res.status(200).json(product);
+  },
   getProductHot: async (req, res) => {
     const product_hot = await productModel.find({
       product_hot: 1

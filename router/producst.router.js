@@ -9,10 +9,13 @@ const {
   updateProduct,
   getAllProduct,
   getProductHot,
+  getProductId
 } = require('../controllers/product.controller');
 
 router.route('/').get(asyncMiddleware(getAllProduct));
 router.route('/product-hot').get(asyncMiddleware(getProductHot))
 router.route('/:category_id').post(asyncMiddleware(creatProduct)).get(asyncMiddleware(getProduct));
 router.route('/:id').patch(asyncMiddleware(updateProduct)).delete(asyncMiddleware(deleteProduct));
+router.route('/detail/:id').get(asyncMiddleware(getProductId))
+
 module.exports = router;
