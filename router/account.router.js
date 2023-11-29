@@ -15,5 +15,5 @@ router
   .route('/')
   .get(asyncMiddleware(authmiddleware), roleMiddleware(['admin','user']),asyncMiddleware(getAccount))
   .post(asyncMiddleware(creatAccount));
-router.route('/:id').patch(updateAccout).delete(asyncMiddleware(deleteAccount));
+router.route('/:id').patch(asyncMiddleware(updateAccout)).delete(asyncMiddleware(deleteAccount));
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const asyncMiddleware = require("../middlewares/async.middleware")
 const {
   creatJob,
   getJob,
@@ -9,7 +10,7 @@ const {
   getAllJobs
 } = require('../controllers/job.controller');
 
-router.route('/').get(getAllJobs);
-router.route('/:account_id').post(creatJob).get(getJob);
-router.route('/:id').patch(updateJob).delete(deleteJob);
+router.route('/').get(asyncMiddleware(getAllJobs));
+router.route('/:account_id').post(asyncMiddleware(creatJob)).get(asyncMiddleware(getJob));
+router.route('/:id').patch(asyncMiddleware(updateJob)).delete(asyncMiddleware(deleteJob));
 module.exports = router;

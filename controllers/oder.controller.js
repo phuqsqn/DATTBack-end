@@ -5,11 +5,8 @@ const cartModel = require('../model/cart.model');
 module.exports = {
     getOder: async (req, res) => {
         const account_id = req.query.account_id;
-
         const status = req.query.status;
-
         const bodyQuery = {};
-
         if (account_id) {
             bodyQuery.account = account_id;
         }
@@ -20,10 +17,8 @@ module.exports = {
             path: 'cart',
             populate: {
                 path: 'items.product'
-
             }
         });
-
         return res.status(200).json(orders)
     },
     creatOder: async (req, res) => {

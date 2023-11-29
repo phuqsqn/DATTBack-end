@@ -21,6 +21,6 @@ const {
   deleteCategory,
 } = require('../controllers/category.controller');
 
-router.route('/').post(upload.single('img'), asyncMiddleware(creatCategory)).get(getCategory);
-router.route('/:id').patch(updateCategory).delete(deleteCategory);
+router.route('/').post(upload.single('img'), asyncMiddleware(creatCategory)).get(asyncMiddleware(getCategory));
+router.route('/:id').patch(asyncMiddleware(updateCategory)).delete(asyncMiddleware(deleteCategory));
 module.exports = router;
