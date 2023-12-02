@@ -22,26 +22,26 @@ module.exports = {
 
     //check product
     const product_comment = await productModel.findById(product_id);
-    if (!product_comment){
+    if (!product_comment) {
       throw new ErrorResponse(404, "product_id not found");
     }
 
     body.product = product_id;
     //khoong thay log ra ne
-  
+
     const newComment = await commentModel.create(body);
     return res.status(201).json(newComment);
   },
   getComment: async (req, res, next) => {
     const product_id = req.params.product_id;
-    const products = await commentModel.find({
+    const comments = await commentModel.find({
       product: product_id,
-    });
-    return res.status(200).json(products);
+    }).populate("account");
+    return res.status(200).json(comments);
   },
   getAllComment: async (req, res) => {
     const product = await commentModel.find();
-    
+
     return res.status(200).json(product);
   },
   updateComment: async (req, res, next) => {

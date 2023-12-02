@@ -21,9 +21,9 @@ const oderSchema = mongoose.Schema(
             default: "On Delivery"
         },
         is_payment: {
-            type: Number,
-            enum: [0, 1],
-            default: 0,
+            type: String,
+            enum: ["Browsing", "Confirm", "Success"],
+            default: "Browsing",
         },
         cart: {
             type: mongoose.SchemaTypes.ObjectId,

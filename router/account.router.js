@@ -9,6 +9,7 @@ const {
   getAccount,
   deleteAccount,
   updateAccout,
+  getAccountId
 } = require('../controllers/account.controller');
 
 router
@@ -16,4 +17,5 @@ router
   .get(asyncMiddleware(authmiddleware), roleMiddleware(['admin','user']),asyncMiddleware(getAccount))
   .post(asyncMiddleware(creatAccount));
 router.route('/:id').patch(asyncMiddleware(updateAccout)).delete(asyncMiddleware(deleteAccount));
+router.route('/information/:id').get(asyncMiddleware(getAccountId))
 module.exports = router;

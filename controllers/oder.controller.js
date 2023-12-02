@@ -24,14 +24,23 @@ module.exports = {
     creatOder: async (req, res) => {
         const body = req.body;
         const cart_id = body.cart;
-        await cartModel.findByIdAndUpdate(cart_id, { isOder: 1 });
+        await cartModel.findByIdAndUpdate(cart_id, { isOrder: 1 });
         const oder = await oderModel.create(body);
         return res.status(201).json(oder)
     },
-    deleteOder: async (req, res) => {
-        const oder_id = req.params.oder_id;
-        const deleteOder = await oderModel.findByIdAndDelete(oder_id);
+    updateOder: async (req, res) => {
+        const id =  req.params.id
+        const body = req.body;
+        const updateOder = await oderModel.findByIdAndUpdate(id, body, {
+            new: true,
+          });
+          return res.status(200).json(updateOder);
 
+    },
+    deleteOder: async (req, res) => {
+        const oder_id = req.params.id;
+        console.log(oder_id)
+        const deleteOder = await oderModel.findByIdAndDelete(oder_id);
         return res.status(200).json(deleteOder);
     }
 };

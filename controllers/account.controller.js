@@ -16,6 +16,11 @@ module.exports = {
     const newAccount = await accountModel.create(body);
     return res.status(201).json(newAccount);
   },
+  getAccountId: async (req, res) => {
+    const id = req.params.id;
+    const accountId = await accountModel.findById(id)
+    return res.status(200).json(accountId);
+  },
   getAccount: async (req, res, next) => {
     const Acounts = await accountModel.find();
     return res.status(200).json(Acounts);
